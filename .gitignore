@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/auth/node_modules
 /.pnp
 .pnp.js
 
