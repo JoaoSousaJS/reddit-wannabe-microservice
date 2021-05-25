@@ -24,6 +24,16 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
   ],
+  overrides: [
+    {
+      files: [
+        '**/*.spec.ts',
+      ],
+      env: {
+        jest: true,
+      },
+    },
+  ],
   rules: {
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
