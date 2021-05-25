@@ -3,4 +3,4 @@ import { signUp } from '../controllers/users';
 
 export const authRouter = express.Router();
 
-authRouter.post('/', signUp);
+authRouter.post('/api/users/signup', signUp);
