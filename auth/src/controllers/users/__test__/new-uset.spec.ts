@@ -31,4 +31,12 @@ describe('New User Controller', () => {
       password: 'asdfg',
     }).expect(400);
   });
+
+  it('should return 400 if confirm password is not equal to password', async () => {
+    await agent.post('/api/users/signup').send({
+      email: 'development@test.com',
+      password: '1234567',
+      confirmPassword: '123456',
+    }).expect(400);
+  });
 });
