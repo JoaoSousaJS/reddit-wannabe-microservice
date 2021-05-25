@@ -24,4 +24,11 @@ describe('New User Controller', () => {
       password: '',
     }).expect(400);
   });
+
+  it('should return 400 if password has less than 6 characters', async () => {
+    await agent.post('/api/users/signup').send({
+      email: 'development@test.com',
+      password: 'asdfg',
+    }).expect(400);
+  });
 });
