@@ -1,6 +1,6 @@
 {
-  "name": "common",
-  "version": "1.0.0",
+  "name": "@reddit/common",
+  "version": "1.0.1",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
@@ -11,6 +11,5 @@
     "clean": "del ./build/*",
     "build": "yarn clean && tsc",
     "pub": "npm version patch && git add . && git commit -m \"chore: Update common\" && yarn build && npm publish"
-
   }
 }
