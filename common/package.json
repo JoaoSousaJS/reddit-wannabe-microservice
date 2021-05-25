@@ -1,5 +1,5 @@
 {
-  "name": "@reddit-wannabe--/common",
+  "name": "@reddit-wannabe/common",
   "version": "1.0.1",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
