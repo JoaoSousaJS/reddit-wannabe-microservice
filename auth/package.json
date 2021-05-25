@@ -26,7 +26,8 @@
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "start": "ts-node-dev --watch 'src' src/index.ts"
+    "start": "ts-node-dev --watch 'src' src/index.ts",
+    "test": "jest --watchAll --no-cache --detectOpenHandles"
   },
   "dependencies": {
     "cookie-session": "^1.4.0",
