@@ -525,10 +525,13 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@reddit-wannabe/common@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@reddit-wannabe/common/-/common-1.0.1.tgz#72d795c0009918278786195985d67cda09490077"
-  integrity sha512-6NWYjnTXFyq2rgt+2l1FU1V0Jwd45NCvekXsnNEL3HnEaURvTHvhwyd3e91zXoEjygT+CQKj87/5Es/Rzx4q1w==
+"@reddit-wannabe/common@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@reddit-wannabe/common/-/common-1.0.2.tgz#de1d7b0561cbbf4ae6d3935e0d7889353c23de4c"
+  integrity sha512-h1sXibd3WYjgo4teQn+yNXdrQAd4UnG7HxT8e4QrIDDAa6H9KIVQl6I3cwvEC76SdpHAYMarBFYljGMxSTAYOg==
+  dependencies:
+    express "^4.17.1"
+    express-validator "^6.11.1"
 
 "@shelf/jest-mongodb@^1.2.4":
   version "1.2.4"
