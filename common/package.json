@@ -1,6 +1,6 @@
 {
-  "name": "@reddit-wannabe/common",
-  "version": "1.0.2",
+  "name": "@reddit-wannabe--/common",
+  "version": "1.0.3",
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
