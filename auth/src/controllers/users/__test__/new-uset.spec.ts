@@ -10,4 +10,11 @@ describe('New User Controller', () => {
       password: 'asdfasdfasd',
     }).expect(400);
   });
+
+  it('should return 400 if email is invalid', async () => {
+    await agent.post('/api/users/signup').send({
+      email: 'development.com',
+      password: 'asdfasdfasd',
+    }).expect(400);
+  });
 });
