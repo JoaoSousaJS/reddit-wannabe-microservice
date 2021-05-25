@@ -1,7 +1,11 @@
 {
   "name": "@reddit-wannabe--/common",
-  "version": "1.0.3",
-  "main": "index.js",
+  "version": "1.0.1",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "files": [
+    "build/**/*"
+  ],
   "license": "MIT",
   "devDependencies": {
     "del-cli": "^3.0.1",
