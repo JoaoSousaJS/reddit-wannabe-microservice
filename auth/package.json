@@ -30,6 +30,11 @@
     "start": "ts-node-dev --watch 'src' src/index.ts",
     "test": "jest --watchAll --no-cache --detectOpenHandles"
   },
+  "config": {
+    "mongodbMemoryServer": {
+      "version": "4.4.6"
+    }
+  },
   "dependencies": {
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
