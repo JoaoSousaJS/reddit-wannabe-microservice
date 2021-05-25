@@ -17,4 +17,11 @@ describe('New User Controller', () => {
       password: 'asdfasdfasd',
     }).expect(400);
   });
+
+  it('should return 400 if password is empty', async () => {
+    await agent.post('/api/users/signup').send({
+      email: 'development@test.com',
+      password: '',
+    }).expect(400);
+  });
 });
