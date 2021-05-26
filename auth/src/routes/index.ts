@@ -12,4 +12,6 @@ authRouter.post('/api/users/signup', [
     max: 20,
   })
     .withMessage('Password is required and must have at least 6 characters'),
+    body('firstName').notEmpty().withMessage('First name required'),
+    body('lastName').notEmpty().withMessage('First name required'),
 ], validateRequest, signUp);
