@@ -96,6 +96,8 @@ describe('New User Controller', () => {
     expect(users.length).toEqual(0);
 
     await agent.post('/api/users/signup').send({
+      firstName: 'joao',
+      lastName: 'sousa',
       email: 'development@test.com',
       password: '1234567',
       confirmPassword: '1234567',
