@@ -42,6 +42,7 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
     'no-use-before-define': 'off',
+    indent: 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
