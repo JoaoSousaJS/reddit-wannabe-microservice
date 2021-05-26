@@ -6,12 +6,16 @@ import { UserStatus } from '../../types/user-status';
 
 interface UserAttrs {
   email: string
+  firstName: string
+  lastName: string
   password: string
-  status: UserStatus
+  status?: UserStatus
 }
 
 interface UserDocument extends Document {
   email: string
+  firstName: string
+  lastName: string
   password: string
   status: UserStatus
 }
@@ -33,6 +37,16 @@ const userSchema = new Schema<UserDocument, UserModel>({
   status: {
     type: String,
     required: true,
+    enum: [UserStatus],
+    default: UserStatus.Active,
+  },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
   },
 },
 {
@@ -48,6 +62,8 @@ const userSchema = new Schema<UserDocument, UserModel>({
 
 userSchema.statics.build = (attrs: UserAttrs) => new User({
   email: attrs.email,
+  firstName: attrs.firstName,
+  lastName: attrs.lastName,
   status: UserStatus.Active,
   password: attrs.password,
 });
