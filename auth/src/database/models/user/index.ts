@@ -1,22 +1,19 @@
 import {
   Document, model, Model, Schema,
 } from 'mongoose';
-import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { Password } from '../../service/password';
 import { UserStatus } from '../../types/user-status';
 
 interface UserAttrs {
-  id: string
   email: string
   password: string
   status: UserStatus
-  version: number
 }
 
 interface UserDocument extends Document {
   email: string
   password: string
   status: UserStatus
-  version: number
 }
 
 interface UserModel extends Model<UserDocument> {
@@ -43,19 +40,25 @@ const userSchema = new Schema<UserDocument, UserModel>({
     transform(doc, ret) {
       ret.id = ret._id;
       delete ret._id;
+      delete ret.password;
+      delete ret.__v;
     },
   },
 });
 
-userSchema.set('versionKey', 'version');
-userSchema.plugin(updateIfCurrentPlugin);
-
 userSchema.statics.build = (attrs: UserAttrs) => new User({
-  _id: attrs.id,
-  version: attrs.version,
   email: attrs.email,
-  status: attrs.status,
+  status: UserStatus.Active,
   password: attrs.password,
+});
+
+userSchema.pre('save', async function signUp(done) {
+  if (this.isModified('password')) {
+    const hashed = await Password.toHash(this.get('password'));
+    this.set('password', hashed);
+  }
+
+  done();
 });
 
 export const User = model<UserDocument, UserModel>('Order', userSchema);
