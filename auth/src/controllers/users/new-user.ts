@@ -1,11 +1,24 @@
 import { BadRequesterror } from '@reddit-wannabe/common';
 import { Request, Response } from 'express';
+import { User } from '../../database/models/user';
 
 export const signUp = async (req: Request, res: Response) => {
-  const { password, confirmPassword } = req.body;
+  const {
+ password, confirmPassword, firstName, lastName, email,
+} = req.body;
 
   if (password !== confirmPassword) {
     throw new BadRequesterror('Password and Password confirmation must be equal');
   }
-  res.status(201).send({ status: true });
+
+  const user = User.build({
+    firstName,
+    lastName,
+    email,
+    password,
+  });
+
+  await user.save();
+
+  res.status(201).send(user);
 };
