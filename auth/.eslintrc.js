@@ -38,6 +38,10 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'no-console': 'off',
+    'no-shadow': 'off',
+    'no-param-reassign': 'off',
+    'no-underscore-dangle': 'off',
+    'no-use-before-define': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
