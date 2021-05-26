@@ -1,6 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
+import { errorHandler } from '@reddit-wannabe/common';
 import { authRouter } from './routes';
 
 export const app = express();
@@ -13,3 +14,4 @@ app.use(cookieSession({
 }));
 
 app.use(authRouter);
+app.use(errorHandler);
