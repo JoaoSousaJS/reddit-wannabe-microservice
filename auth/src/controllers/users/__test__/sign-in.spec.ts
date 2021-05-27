@@ -37,4 +37,19 @@ describe('Sign in Controller', () => {
       password: 'asdfg1234',
     }).expect(400);
   });
+
+  it('should return 400 if password provided does not match', async () => {
+    await agent.post('/api/users/signup').send({
+      firstName: 'joao',
+      lastName: 'sousa',
+      email: 'joao@asdas.com',
+      password: 'asdfg1234',
+      confirmPassword: 'asdfg1234',
+    }).expect(201);
+
+    await agent.post('/api/users/signin').send({
+      email: 'joao@asdas.com',
+      password: 'asdfg123456',
+    }).expect(400);
+  });
 });
