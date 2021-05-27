@@ -126,4 +126,16 @@ describe('New User Controller', () => {
       confirmPassword: '1234567',
     }).expect(400);
   });
+
+  it('should return a token if signUp is succeeded', async () => {
+    const response = await agent.post('/api/users/signup').send({
+      firstName: 'joao',
+      lastName: 'sousa',
+      email: 'development@test.com',
+      password: '1234567',
+      confirmPassword: '1234567',
+    }).expect(201);
+
+    expect(response.get('Set-Cookie')).toBeDefined();
+  });
 });
