@@ -1,7 +1,7 @@
-import { validateRequest } from '@reddit-wannabe/common';
+import { currentUser, validateRequest } from '@reddit-wannabe/common';
 import express from 'express';
 import { body } from 'express-validator';
-import { signIn, signUp } from '../controllers/users';
+import { getCurrentUser, signIn, signUp } from '../controllers/users';
 
 export const authRouter = express.Router();
 
@@ -19,3 +19,5 @@ authRouter.post('/api/users/signup', [
 authRouter.post('/api/users/signin', [
   body('email').isEmail().withMessage('Invalid Email'),
 ], validateRequest, signIn);
+
+authRouter.get('/api/users/me', currentUser, getCurrentUser);
