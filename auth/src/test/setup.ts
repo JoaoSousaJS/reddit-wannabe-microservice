@@ -53,13 +53,13 @@ global.signIn = async () => {
   const email = 'test@test.com';
   const password = 'password';
   const firstName = 'joao';
-  const lastname = 'sousa';
+  const lastName = 'sousa';
 
   const response = await request(app).post('/api/users/signup').send({
     email,
     password,
     firstName,
-    lastname,
+    lastName,
     confirmPassword: password,
   });
 
