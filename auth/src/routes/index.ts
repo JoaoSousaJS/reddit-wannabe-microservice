@@ -18,8 +18,4 @@ authRouter.post('/api/users/signup', [
 
 authRouter.post('/api/users/signin', [
   body('email').isEmail().withMessage('Invalid Email'),
-  body('password').trim().notEmpty().isLength({
-    min: 6,
-    max: 20,
-  }),
 ], validateRequest, signIn);
