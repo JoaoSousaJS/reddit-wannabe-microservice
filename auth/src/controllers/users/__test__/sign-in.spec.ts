@@ -23,4 +23,11 @@ describe('Sign in Controller', () => {
       password: 'asdfasdfasd',
     }).expect(400);
   });
+
+  it('should return 400 if password is invalid', async () => {
+    await agent.post('/api/users/signin').send({
+      email: 'joao@asdas.com',
+      password: 'asd',
+    }).expect(400);
+  });
 });
