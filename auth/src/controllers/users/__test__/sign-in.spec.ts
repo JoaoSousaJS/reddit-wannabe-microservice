@@ -30,4 +30,11 @@ describe('Sign in Controller', () => {
       password: 'asd',
     }).expect(400);
   });
+
+  it('should return 400 if email provided does not exist on the db', async () => {
+    await agent.post('/api/users/signin').send({
+      email: 'joao@asdas.com',
+      password: 'asdfg1234',
+    }).expect(400);
+  });
 });
