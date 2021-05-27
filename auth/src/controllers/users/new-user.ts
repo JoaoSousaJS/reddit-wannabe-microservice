@@ -7,6 +7,14 @@ export const signUp = async (req: Request, res: Response) => {
  password, confirmPassword, firstName, lastName, email,
 } = req.body;
 
+  const existingUser = await User.findOne({
+    email,
+  });
+
+  if (existingUser) {
+    throw new BadRequesterror('Email already exists');
+  }
+
   if (password !== confirmPassword) {
     throw new BadRequesterror('Password and Password confirmation must be equal');
   }
