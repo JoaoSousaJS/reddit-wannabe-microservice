@@ -104,8 +104,26 @@ describe('New User Controller', () => {
     }).expect(201);
 
     users = await User.find({});
-
     expect(users.length).toEqual(1);
     expect(users[0].email).toEqual('development@test.com');
+  });
+
+  it('should return 400 if email provided already exists', async () => {
+    const user = User.build({
+      firstName: 'joao',
+      lastName: 'sousa',
+      email: 'development@test.com',
+      password: '1234567',
+    });
+
+    await user.save();
+
+    await agent.post('/api/users/signup').send({
+      firstName: 'joao',
+      lastName: 'sousa',
+      email: 'development@test.com',
+      password: '1234567',
+      confirmPassword: '1234567',
+    }).expect(400);
   });
 });
