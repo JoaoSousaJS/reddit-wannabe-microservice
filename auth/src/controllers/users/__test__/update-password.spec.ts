@@ -27,7 +27,7 @@ describe('Update Password Controller', () => {
     const newUser = await buildUser();
     await agent.patch('/api/users/update-password')
     .set('Cookie', global.signInWithUser(newUser.id)).send({
-      oldPassword: newUser.password,
+      oldPassword: 'asdfasdfasd',
       newPassword: '1234567',
       confirmNewPassword: '1234567',
     }).expect(201);
