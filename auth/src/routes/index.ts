@@ -1,7 +1,9 @@
 import { currentUser, validateRequest } from '@reddit-wannabe/common';
 import express from 'express';
 import { body } from 'express-validator';
-import { getCurrentUser, signIn, signUp } from '../controllers/users';
+import {
+ getCurrentUser, signIn, signOut, signUp,
+} from '../controllers/users';
 
 export const authRouter = express.Router();
 
@@ -21,3 +23,4 @@ authRouter.post('/api/users/signin', [
 ], validateRequest, signIn);
 
 authRouter.get('/api/users/me', currentUser, getCurrentUser);
+authRouter.post('/api/users/signout', signOut);

@@ -10,11 +10,19 @@ describe('Sign out Controller', () => {
   afterAll(async () => close());
 
   it('should logout the current user', async () => {
-    const cookie = await global.signIn();
+    await agent.post('/api/users/signup').send({
+      firstName: 'joao',
+      lastName: 'sousa',
+      email: 'development@test.com',
+      password: '1234567',
+      confirmPassword: '1234567',
+    }).expect(201);
 
-    const response = await agent.post('/api/users/signout').set('Cookie', cookie)
+    const response = await agent.post('/api/users/signout')
     .send({}).expect(200);
 
-    expect(response.get('Set-Cookie')).toBeUndefined();
+    expect(response.get('Set-Cookie')[0]).toEqual(
+      'express:sess=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly',
+    );
   });
 });
