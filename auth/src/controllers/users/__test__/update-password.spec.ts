@@ -62,4 +62,14 @@ describe('Update Password Controller', () => {
       confirmNewPassword: '1234',
     }).expect(400);
   });
+
+  it('should return 400 new password and password confirmation are not equal', async () => {
+    const newUser = await buildUser();
+    await agent.patch('/api/users/update-password')
+    .set('Cookie', global.signInWithUser(newUser.id)).send({
+      oldPassword: 'asdfasdfasd',
+      newPassword: '1234567',
+      confirmNewPassword: '12345678',
+    }).expect(400);
+  });
 });
