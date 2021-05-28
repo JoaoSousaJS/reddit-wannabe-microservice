@@ -5,7 +5,7 @@ import { Password } from '../../database/service/password';
 
 export const updatePassword = async (req: Request, res: Response) => {
   const userId = req.currentUser.id;
-  const { oldPassword, newPassword } = req.body;
+  const { oldPassword, newPassword, confirmNewPassword } = req.body;
 
   const user = await User.findById(userId);
 
@@ -13,6 +13,10 @@ export const updatePassword = async (req: Request, res: Response) => {
 
   if (!hashedPassword) {
     throw new BadRequesterror('Invalid password');
+  }
+
+  if (newPassword !== confirmNewPassword) {
+    throw new BadRequesterror('Passwords must be equal');
   }
 
   user.set({
