@@ -29,4 +29,8 @@ authRouter.patch('/api/users/update-password', [
     min: 6,
     max: 20,
   }).withMessage('Password is required and must have at least 6 characters'),
+  body('confirmNewPassword').trim().isLength({
+    min: 6,
+    max: 20,
+  }).withMessage('Password is required and must have at least 6 characters'),
 ], currentUser, validateRequest, updatePassword);
