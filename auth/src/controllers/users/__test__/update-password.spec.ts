@@ -42,4 +42,14 @@ describe('Update Password Controller', () => {
       confirmNewPassword: '1234567',
     }).expect(400);
   });
+
+  it('should return 400 if new password has an invalid format', async () => {
+    const newUser = await buildUser();
+    await agent.patch('/api/users/update-password')
+    .set('Cookie', global.signInWithUser(newUser.id)).send({
+      oldPassword: 'asdfasdfasd',
+      newPassword: '1234',
+      confirmNewPassword: '1234567',
+    }).expect(400);
+  });
 });
