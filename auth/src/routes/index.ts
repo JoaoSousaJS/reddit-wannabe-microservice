@@ -24,4 +24,4 @@ authRouter.post('/api/users/signin', [
 
 authRouter.get('/api/users/me', currentUser, getCurrentUser);
 authRouter.post('/api/users/signout', signOut);
-authRouter.patch('/api/users/update-password/:userId', currentUser, validateRequest, updatePassword);
+authRouter.patch('/api/users/update-password', currentUser, validateRequest, updatePassword);
