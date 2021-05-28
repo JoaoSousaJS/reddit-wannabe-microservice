@@ -24,4 +24,9 @@ authRouter.post('/api/users/signin', [
 
 authRouter.get('/api/users/me', currentUser, getCurrentUser);
 authRouter.post('/api/users/signout', signOut);
-authRouter.patch('/api/users/update-password', currentUser, validateRequest, updatePassword);
+authRouter.patch('/api/users/update-password', [
+  body('newPassword').trim().isLength({
+    min: 6,
+    max: 20,
+  }).withMessage('Password is required and must have at least 6 characters'),
+], currentUser, validateRequest, updatePassword);
