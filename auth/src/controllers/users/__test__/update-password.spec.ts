@@ -25,12 +25,21 @@ describe('Update Password Controller', () => {
 
   it('should return 201 and update user password', async () => {
     const newUser = await buildUser();
-
     await agent.patch('/api/users/update-password')
     .set('Cookie', global.signInWithUser(newUser.id)).send({
       oldPassword: newUser.password,
       newPassword: '1234567',
       confirmNewPassword: '1234567',
     }).expect(201);
+  });
+
+  it('should return 400 if old password is invalid', async () => {
+    const newUser = await buildUser();
+    await agent.patch('/api/users/update-password')
+    .set('Cookie', global.signInWithUser(newUser.id)).send({
+      oldPassword: 'wrongPassword',
+      newPassword: '1234567',
+      confirmNewPassword: '1234567',
+    }).expect(400);
   });
 });
