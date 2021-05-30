@@ -2,7 +2,7 @@ import { currentUser, validateRequest } from '@reddit-wannabe/common';
 import express from 'express';
 import { body } from 'express-validator';
 import {
- getCurrentUser, signIn, signOut, signUp, updatePassword,
+ getCurrentUser, getUserDetails, signIn, signOut, signUp, updatePassword,
 } from '../controllers/users';
 
 export const authRouter = express.Router();
@@ -34,3 +34,5 @@ authRouter.patch('/api/users/update-password', [
     max: 20,
   }).withMessage('Password is required and must have at least 6 characters'),
 ], currentUser, validateRequest, updatePassword);
+
+authRouter.get('/api/users/detail/:userId', currentUser, getUserDetails);

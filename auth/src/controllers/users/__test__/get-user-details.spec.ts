@@ -31,7 +31,7 @@ describe('Get User Detail Controller', () => {
     ))
     .send().expect(200);
 
-    expect(response.body.email).toEqual('test@test.com');
+    expect(response.body.email).toEqual('joao@joao.com');
     expect(response.body.firstName).toEqual('joao');
     expect(response.body.lastName).toEqual('sousa');
   });
