@@ -35,4 +35,13 @@ describe('Get User Detail Controller', () => {
     expect(response.body.firstName).toEqual('joao');
     expect(response.body.lastName).toEqual('sousa');
   });
+
+  it('should return 400 if user id does not exist', async () => {
+    const newUser = await buildUser();
+
+    await agent.get(`/api/users/detail/${newUser.id}`).set('Cookie', global.signInWithUser(
+      newUser.id,
+    ))
+    .send().expect(400);
+  });
 });
