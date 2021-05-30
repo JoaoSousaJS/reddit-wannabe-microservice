@@ -2,6 +2,7 @@ import { currentUser, validateRequest } from '@reddit-wannabe/common';
 import express from 'express';
 import { body } from 'express-validator';
 import {
+  getAllUsers,
  getCurrentUser, getUserDetails, signIn, signOut, signUp, updatePassword,
 } from '../controllers/users';
 
@@ -36,3 +37,4 @@ authRouter.patch('/api/users/update-password', [
 ], currentUser, validateRequest, updatePassword);
 
 authRouter.get('/api/users/detail/:userId', currentUser, getUserDetails);
+authRouter.get('/api/users/all', currentUser, getAllUsers);

@@ -32,14 +32,14 @@ describe('Get All Users Controller', () => {
   afterAll(async () => close());
 
   it('should return all users', async () => {
-    const users = await User.find({});
-    expect(users).toHaveLength(0);
+    let users = await User.find({});
+    expect(users.length).toEqual(0);
     await buildUser();
-
     const response = await agent.get('/api/users/all').set('Cookie', await global.signIn())
     .send().expect(200);
 
-    expect(users).toHaveLength(2);
-    expect(response.body).toHaveLength(2);
+    users = await User.find({});
+    expect(users.length).toEqual(3);
+    expect(response.body).toHaveLength(3);
   });
 });
