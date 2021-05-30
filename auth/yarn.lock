@@ -525,10 +525,10 @@
     "@nodelib/fs.scandir" "2.1.4"
     fastq "^1.6.0"
 
-"@reddit-wannabe/common@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@reddit-wannabe/common/-/common-1.0.8.tgz#ecdf9d377f71e105f895eefa7ea92b79aa047489"
-  integrity sha512-YFuCPMKwzkGIJcNUh7Gy7vX4rEujuTmjQCwSU6l4TiJVB0m33P6bN/E5buvNA8fOaVpr+WGhPUxnU/ZYbKAWMw==
+"@reddit-wannabe/common@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@reddit-wannabe/common/-/common-1.0.9.tgz#43e79a7751035951f587bafd0d90bad35f240688"
+  integrity sha512-5zDFPwUXlL5b8mHlrz0Xw/Y0JXD3IVkNeppMpoxD0qLLAk1jxCkl0V6Ue4R/bOlflFGuqyIEF5lc3VBvwu+yag==
   dependencies:
     express "^4.17.1"
     express-validator "^6.11.1"
