@@ -23,7 +23,7 @@ describe('Get User Detail Controller', () => {
   beforeEach(async () => clear());
   afterAll(async () => close());
 
-  it('should return the details of the current user', async () => {
+  it('should return the details of an user', async () => {
     const newUser = await buildUser();
 
     const response = await agent.get(`/api/users/detail/${newUser.id}`).set('Cookie', global.signInWithUser(
