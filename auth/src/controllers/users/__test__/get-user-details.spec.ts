@@ -1,4 +1,5 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../../app';
 import { User } from '../../../database/models/user';
 import { clear, close, connect } from '../../../test/setup';
@@ -38,8 +39,9 @@ describe('Get User Detail Controller', () => {
 
   it('should return 400 if user id does not exist', async () => {
     const newUser = await buildUser();
+    const randomMongoId = mongoose.Types.ObjectId().toHexString();
 
-    await agent.get(`/api/users/detail/${newUser.id}`).set('Cookie', global.signInWithUser(
+    await agent.get(`/api/users/detail/${randomMongoId}`).set('Cookie', global.signInWithUser(
       newUser.id,
     ))
     .send().expect(400);
