@@ -42,9 +42,10 @@ describe('Get User Detail Controller', () => {
     .send().expect(400);
   });
 
-  it('should 400 if user being deactivated is the current user', async () => {
-    const randomId = mongoose.Types.ObjectId().toHexString();
-    await agent.patch(`/api/users/delete/${randomId}`).set('Cookie', await global.signIn())
-    .send().expect(400);
+  it('should 401 if user being deactivated is the current user', async () => {
+    const newUser = await buildUser();
+
+    await agent.patch(`/api/users/delete/${newUser.id}`).set('Cookie', global.signInWithUser(newUser.id))
+    .send().expect(401);
   });
 });
