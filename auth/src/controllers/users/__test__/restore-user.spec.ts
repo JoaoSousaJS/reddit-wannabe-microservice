@@ -36,9 +36,16 @@ describe('Restore User Controller', () => {
     expect(user.status).toEqual(UserStatus.Active);
   });
 
-  it('should 400 if user does not exist', async () => {
+  it('should return 400 if user does not exist', async () => {
     const randomId = mongoose.Types.ObjectId().toHexString();
     await agent.patch(`/api/users/restore/${randomId}`).set('Cookie', await global.signIn())
     .send().expect(400);
+  });
+
+  it('should return 401 if user being activated is the current user', async () => {
+    const newUser = await buildUser();
+
+    await agent.patch(`/api/users/restore/${newUser.id}`).set('Cookie', global.signInWithUser(newUser.id))
+    .send().expect(401);
   });
 });
