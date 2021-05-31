@@ -22,5 +22,11 @@ export const restoreUser = async (req: Request, res: Response) => {
   if (userId === id) {
     throw new UnauthorizedError("You can't do that");
   }
-  res.send({ true: 'true' });
+
+  userExist.set({
+    status: UserStatus.Active,
+  });
+
+  await userExist.save();
+  res.send(userExist);
 };
