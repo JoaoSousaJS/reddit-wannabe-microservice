@@ -117,4 +117,19 @@ describe('Update User Detail Controller', () => {
 
     expect(response.body.lastName).toEqual('Rivia');
   });
+
+  it('should update the email of the user', async () => {
+    const newUser = await buildUser();
+
+    const response = await agent.patch(`/api/users/update/${newUser.id}`).set('Cookie', global.signInWithUser(
+      newUser.id,
+    ))
+    .send({
+      firstName: 'joao',
+      lastName: 'sousa',
+      email: 'joao@thewitcher.com',
+    }).expect(201);
+
+    expect(response.body.lastName).toEqual('Rivia');
+  });
 });
