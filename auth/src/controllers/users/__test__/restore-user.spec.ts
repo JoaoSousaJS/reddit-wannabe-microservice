@@ -48,4 +48,17 @@ describe('Restore User Controller', () => {
     await agent.patch(`/api/users/restore/${newUser.id}`).set('Cookie', global.signInWithUser(newUser.id))
     .send().expect(401);
   });
+
+  it('should return 401 if the user is inactive', async () => {
+    const newUser = await buildUser();
+
+    newUser.set({
+      status: UserStatus.Inactive,
+    });
+
+    await newUser.save();
+
+    await agent.patch(`/api/users/restore/${newUser.id}`).set('Cookie', global.signInWithUser(newUser.id))
+    .send().expect(401);
+  });
 });
