@@ -75,7 +75,7 @@ describe('Update User Detail Controller', () => {
     }).expect(400);
   });
 
-  it('should return 400 if firstName is blank', async () => {
+  it('should return 400 if lastName is blank', async () => {
     const newUser = await buildUser();
 
     await agent.patch(`/api/users/update/${newUser.id}`).set('Cookie', global.signInWithUser(
@@ -103,7 +103,7 @@ describe('Update User Detail Controller', () => {
     expect(response.body.lastName).toEqual('Rivia');
   });
 
-  it('should update the last name of the user', async () => {
+  it('should update the firstName of the user', async () => {
     const newUser = await buildUser();
 
     const response = await agent.patch(`/api/users/update/${newUser.id}`).set('Cookie', global.signInWithUser(
