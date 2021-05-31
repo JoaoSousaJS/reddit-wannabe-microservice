@@ -28,6 +28,11 @@ describe('Restore User Controller', () => {
   it('should restore an user', async () => {
     const newUser = await buildUser();
 
+    newUser.set({
+      status: UserStatus.Inactive,
+    });
+    await newUser.save();
+
     await agent.patch(`/api/users/restore/${newUser.id}`).set('Cookie', await global.signIn())
     .send().expect(200);
 

@@ -4,7 +4,7 @@ import { body } from 'express-validator';
 import {
   deleteUser,
   getAllUsers,
- getCurrentUser, getUserDetails, signIn, signOut, signUp, updatePassword,
+ getCurrentUser, getUserDetails, restoreUser, signIn, signOut, signUp, updatePassword,
 } from '../controllers/users';
 
 export const authRouter = express.Router();
@@ -40,3 +40,4 @@ authRouter.patch('/api/users/update-password', [
 authRouter.get('/api/users/detail/:userId', currentUser, getUserDetails);
 authRouter.get('/api/users/all', currentUser, getAllUsers);
 authRouter.patch('/api/users/delete/:userId', currentUser, deleteUser);
+authRouter.patch('/api/users/restore/:userId', currentUser, restoreUser);
