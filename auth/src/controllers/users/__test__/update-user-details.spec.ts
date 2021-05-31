@@ -100,8 +100,6 @@ describe('Update User Detail Controller', () => {
       email: 'joao@joao.com',
     }).expect(201);
 
-    expect(response.body.email).toEqual('joao@joao.com');
-    expect(response.body.firstName).toEqual('joao');
     expect(response.body.lastName).toEqual('Rivia');
   });
 });
