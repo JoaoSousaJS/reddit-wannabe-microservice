@@ -35,4 +35,10 @@ describe('Restore User Controller', () => {
 
     expect(user.status).toEqual(UserStatus.Active);
   });
+
+  it('should 400 if user does not exist', async () => {
+    const randomId = mongoose.Types.ObjectId().toHexString();
+    await agent.patch(`/api/users/restore/${randomId}`).set('Cookie', await global.signIn())
+    .send().expect(400);
+  });
 });
