@@ -44,4 +44,5 @@ authRouter.patch('/api/users/restore/:userId', currentUser, restoreUser);
 authRouter.patch('/api/users/update/:userId', [
   body('email').isEmail().withMessage('Invalid Email'),
   body('firstName').notEmpty().withMessage('First name is required'),
+  body('lastName').notEmpty().withMessage('Last name is required'),
 ], currentUser, validateRequest, updateUser);
