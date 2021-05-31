@@ -24,11 +24,10 @@ describe('Update User Detail Controller', () => {
   afterAll(async () => close());
 
   it('should return 400 if user id does not exist', async () => {
-    const newUser = await buildUser();
+    const randomId = 'asdasdas';
 
-    await agent.patch(`/api/users/update/${newUser.id}`).set('Cookie', global.signInWithUser(
-      newUser.id,
-    ))
+    await agent.patch(`/api/users/update/${randomId}`).set('Cookie', await global.signIn())
+
     .send({
       firstName: 'joao',
       lastName: 'Rivia',

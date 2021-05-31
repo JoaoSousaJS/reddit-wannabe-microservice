@@ -7,3 +7,4 @@ export * from './get-user-details';
 export * from './get-all-users';
 export * from './delete-user';
 export * from './restore-user';
+export * from './update-user-details';
