@@ -41,4 +41,6 @@ authRouter.get('/api/users/detail/:userId', currentUser, getUserDetails);
 authRouter.get('/api/users/all', currentUser, getAllUsers);
 authRouter.patch('/api/users/delete/:userId', currentUser, deleteUser);
 authRouter.patch('/api/users/restore/:userId', currentUser, restoreUser);
-authRouter.patch('/api/users/update/:userId', currentUser, updateUser);
+authRouter.patch('/api/users/update/:userId', [
+  body('email').isEmail().withMessage('Invalid Email'),
+], currentUser, validateRequest, updateUser);
