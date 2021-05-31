@@ -43,4 +43,5 @@ authRouter.patch('/api/users/delete/:userId', currentUser, deleteUser);
 authRouter.patch('/api/users/restore/:userId', currentUser, restoreUser);
 authRouter.patch('/api/users/update/:userId', [
   body('email').isEmail().withMessage('Invalid Email'),
+  body('firstName').notEmpty().withMessage('First name is required'),
 ], currentUser, validateRequest, updateUser);
