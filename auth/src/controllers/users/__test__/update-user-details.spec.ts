@@ -62,6 +62,19 @@ describe('Update User Detail Controller', () => {
     }).expect(400);
   });
 
+  it('should return 400 if firstName is blank', async () => {
+    const newUser = await buildUser();
+
+    await agent.patch(`/api/users/update/${newUser.id}`).set('Cookie', global.signInWithUser(
+      newUser.id,
+    ))
+    .send({
+      firstName: '',
+      lastName: 'Rivia',
+      email: 'joao@joao.com',
+    }).expect(400);
+  });
+
   it('should update the last name of the user', async () => {
     const newUser = await buildUser();
 
