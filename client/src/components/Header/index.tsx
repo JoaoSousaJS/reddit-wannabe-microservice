@@ -1,4 +1,5 @@
 import { Box, Button, Text } from '@chakra-ui/react'
+import Link from 'next/link'
 
 const Header = () => (
   <Box
@@ -8,14 +9,20 @@ const Header = () => (
     justifyContent="space-between"
     padding="2"
   >
-    <Text bold fontSize="lg" alignSelf="center">
-      Reddit wannabe
-    </Text>
+    <Link href="/">
+      <Box>
+        <Text colorScheme="blackAlpha" fontSize="lg" alignSelf="center">
+          Reddit wannabe
+        </Text>
+      </Box>
+    </Link>
 
     <Box>
-      <Button marginRight="1" colorScheme="teal">
-        Sign in
-      </Button>
+      <Link href="/auth/signin">
+        <Button marginRight="1" colorScheme="teal">
+          Log In
+        </Button>
+      </Link>
       <Button colorScheme="teal">Sign up</Button>
     </Box>
   </Box>
