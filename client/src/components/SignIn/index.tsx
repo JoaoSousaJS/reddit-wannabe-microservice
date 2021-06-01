@@ -3,7 +3,8 @@ import {
   FormControl,
   Button,
   FormLabel,
-  Input
+  Input,
+  FormErrorMessage
 } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
@@ -30,22 +31,33 @@ export const SignIn = () => {
   return (
     <Container padding="3">
       <form onSubmit={handleSignUp}>
-        <FormControl>
+        <FormControl isInvalid={!!errors.email}>
           <FormLabel htmlFor="email">Email</FormLabel>
           <Input
             id="email"
             placeholder="Type your email"
             type="email"
-            {...register('email')}
+            {...register('email', {
+              required: 'Required'
+            })}
           />
-
+          <FormErrorMessage>
+            {errors.email && errors.email.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={!!errors.password}>
+          <FormLabel htmlFor="password">Password</FormLabel>
           <Input
-            marginTop="2"
             id="password"
             placeholder="Type your password"
             type="password"
-            {...register('password')}
+            {...register('password', {
+              required: 'Required'
+            })}
           />
+          <FormErrorMessage>
+            {errors.password && errors.password.message}
+          </FormErrorMessage>
         </FormControl>
 
         <Button
