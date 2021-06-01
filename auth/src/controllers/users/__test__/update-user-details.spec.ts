@@ -1,4 +1,5 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../../app';
 import { User } from '../../../database/models/user';
 import { clear, close, connect } from '../../../test/setup';
@@ -24,7 +25,7 @@ describe('Update User Detail Controller', () => {
   afterAll(async () => close());
 
   it('should return 400 if user id does not exist', async () => {
-    const randomId = 'asdasdas';
+    const randomId = mongoose.Types.ObjectId().toHexString();
 
     await agent.patch(`/api/users/update/${randomId}`).set('Cookie', await global.signIn())
 
@@ -114,7 +115,7 @@ describe('Update User Detail Controller', () => {
       email: 'joao@joao.com',
     }).expect(201);
 
-    expect(response.body.lastName).toEqual('Rivia');
+    expect(response.body.firstName).toEqual('Geralt');
   });
 
   it('should update the email of the user', async () => {
@@ -129,7 +130,7 @@ describe('Update User Detail Controller', () => {
       email: 'joao@thewitcher.com',
     }).expect(201);
 
-    expect(response.body.lastName).toEqual('Rivia');
+    expect(response.body.email).toEqual('joao@thewitcher.com');
   });
 
   it('should update the user data', async () => {
