@@ -15,12 +15,6 @@ spec:
       containers:
         - name: client-reddit
           image: haalpme/reddit-client
-          env:
-            - name: STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: stripe-secret
-                  key: STRIPE_KEY
 ---
 apiVersion: v1
 kind: Service
