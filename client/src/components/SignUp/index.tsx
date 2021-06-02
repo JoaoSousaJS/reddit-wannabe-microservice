@@ -6,6 +6,7 @@ import {
   Button
 } from '@chakra-ui/react'
 import { useRequest } from 'hooks/use-request'
+import { useRouter } from 'next/dist/client/router'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 
@@ -14,7 +15,7 @@ type FormData = {
   lastName: string
   email: string
   password: string
-  passwordConfirmation: string
+  confirmPassword: string
 }
 
 export const SignUp = () => {
@@ -24,19 +25,22 @@ export const SignUp = () => {
     formState: { errors, isSubmitting }
   } = useForm<FormData>()
 
+  const router = useRouter()
+
   const { doRequest, errors: apiErrors } = useRequest({
     url: '/api/users/signup',
-    method: 'post'
+    method: 'post',
+    onSuccess: () => router.push('/')
   })
 
   const handleSignUp = handleSubmit(
-    async ({ firstName, lastName, email, password, passwordConfirmation }) => {
+    async ({ firstName, lastName, email, password, confirmPassword }) => {
       await doRequest({
         firstName,
         lastName,
         email,
         password,
-        passwordConfirmation
+        confirmPassword
       })
     }
   )
@@ -89,9 +93,10 @@ export const SignUp = () => {
         <Input
           id="password"
           placeholder="Password"
+          type="password"
           {...register('password', {
-            required: 'A valid password is required',
-            minLength: 6
+            required: 'Password is required',
+            min: 6
           })}
         />
         <FormErrorMessage>
@@ -99,18 +104,19 @@ export const SignUp = () => {
         </FormErrorMessage>
       </FormControl>
 
-      <FormControl isInvalid={!!errors.passwordConfirmation}>
+      <FormControl isInvalid={!!errors.confirmPassword}>
         <FormLabel>Confirm Password</FormLabel>
         <Input
-          id="passwordConfirmation"
+          id="confirmPassword"
           placeholder="Type your Password again"
-          {...register('passwordConfirmation', {
-            required: 'You need to put the password confirmation',
-            minLength: 6
+          type="password"
+          {...register('confirmPassword', {
+            required: true,
+            min: 6
           })}
         />
         <FormErrorMessage>
-          {errors.passwordConfirmation && errors.passwordConfirmation.message}
+          {errors.confirmPassword && errors.confirmPassword.message}
         </FormErrorMessage>
       </FormControl>
 
@@ -126,7 +132,9 @@ export const SignUp = () => {
         Sign Up
       </Button>
       <Link href="/">
-        <Button>Back</Button>
+        <Button mt="2" isFullWidth colorScheme="teal">
+          Back
+        </Button>
       </Link>
     </form>
   )
