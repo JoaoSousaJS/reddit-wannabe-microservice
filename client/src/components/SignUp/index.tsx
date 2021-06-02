@@ -29,19 +29,22 @@ export const SignUp = () => {
 
   const { doRequest, errors: apiErrors } = useRequest({
     url: '/api/users/signup',
-    method: 'post',
-    onSuccess: () => router.push('/')
+    method: 'post'
   })
 
   const handleSignUp = handleSubmit(
     async ({ firstName, lastName, email, password, confirmPassword }) => {
-      await doRequest({
+      const response = await doRequest({
         firstName,
         lastName,
         email,
         password,
         confirmPassword
       })
+
+      if (response !== undefined) {
+        router.push('/')
+      }
     }
   )
   return (
