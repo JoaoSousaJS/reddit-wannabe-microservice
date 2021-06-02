@@ -1,11 +1,11 @@
-import '../../styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import Header from 'components/Header'
+import theme from '../../styles/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider>
+    <ChakraProvider resetCSS theme={theme}>
       <Header />
       <Component {...pageProps} />
     </ChakraProvider>

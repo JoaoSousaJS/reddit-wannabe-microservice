@@ -1,13 +1,16 @@
-import { Box } from '@chakra-ui/react'
-import Header from 'components/Header'
+import { Stack, StackProps } from '@chakra-ui/react'
 
-const Main = () => {
+const Main = (props: StackProps) => {
   return (
-    <Box maxWidth="full" maxHeight="full">
-      <Box>
-        <Header />
-      </Box>
-    </Box>
+    <Stack
+      spacing="1.5rem"
+      width="100%"
+      maxWidth="48rem"
+      mt="-45vh"
+      pt="8rem"
+      px="1rem"
+      {...props}
+    />
   )
 }
 

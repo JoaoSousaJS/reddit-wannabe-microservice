@@ -1,3 +1,11 @@
+import { Container } from 'components/Container'
+
+import { Text } from '@chakra-ui/react'
+
 export default function Home() {
-  return <h1>threads here</h1>
+  return (
+    <Container height="100vh">
+      <Text>threads here</Text>
+    </Container>
+  )
 }

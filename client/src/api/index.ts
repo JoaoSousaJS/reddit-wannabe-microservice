@@ -8,6 +8,10 @@ type AxiosRequestProps = {
   }
 }
 
+export const basicInstace = axios.create({
+  baseURL: 'http://ingress-nginx-controller.ingress-nginx.svc.cluster.local'
+})
+
 export const client = ({ req }: AxiosRequestProps) => {
   if (typeof window === 'undefined') {
     return axios.create({
