@@ -11,7 +11,7 @@ const Header = () => (
   >
     <Link href="/">
       <Box>
-        <Text colorScheme="blackAlpha" fontSize="lg" alignSelf="center">
+        <Text color="black" fontSize="lg" alignSelf="center">
           Reddit wannabe
         </Text>
       </Box>

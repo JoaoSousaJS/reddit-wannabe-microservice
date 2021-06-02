@@ -30,8 +30,6 @@ export const SignIn = () => {
     onSuccess: () => router.push('/')
   })
 
-  console.log(apiErrors)
-
   const handleSignUp = handleSubmit(async ({ email, password }) => {
     await doRequest({
       email,
