@@ -23,7 +23,9 @@ const Header = () => (
           Log In
         </Button>
       </Link>
-      <Button colorScheme="teal">Sign up</Button>
+      <Link href="/auth/signup">
+        <Button colorScheme="teal">Sign up</Button>
+      </Link>
     </Box>
   </Box>
 )
