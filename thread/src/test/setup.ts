@@ -48,7 +48,7 @@ export const clear = async () => {
   }
 };
 
-global.signIn = () => {
+global.signIn = (): string[] => {
   const payload = {
     id: mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com',
