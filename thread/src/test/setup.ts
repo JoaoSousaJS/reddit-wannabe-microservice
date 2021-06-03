@@ -5,15 +5,12 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import request from 'supertest';
 import jwt from 'jsonwebtoken';
-import { app } from '../app';
 
 declare global {
   namespace NodeJS {
     interface Global {
-      signIn(): Promise<string>
-      signInWithUser(id: string): string[]
+      signIn(): string[]
     }
   }
 }
@@ -51,28 +48,9 @@ export const clear = async () => {
   }
 };
 
-global.signIn = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
-  const firstName = 'joao';
-  const lastName = 'sousa';
-
-  const response = await request(app).post('/api/users/signup').send({
-    email,
-    password,
-    firstName,
-    lastName,
-    confirmPassword: password,
-  });
-
-  const cookie = response.get('Set-Cookie')[0];
-
-  return cookie;
-};
-
-global.signInWithUser = (id: string): string[] => {
+global.signIn = () => {
   const payload = {
-    id: id || mongoose.Types.ObjectId().toHexString,
+    id: mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com',
   };
 

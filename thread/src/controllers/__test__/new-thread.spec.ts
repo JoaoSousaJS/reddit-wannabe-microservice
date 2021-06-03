@@ -9,4 +9,8 @@ describe('New Thread', () => {
 
     expect(response.status).not.toEqual(404);
   });
+
+  it('Should only be accessed if user is signed in', async () => {
+    await agent.post('/api/threads').send({}).expect(401);
+  });
 });
