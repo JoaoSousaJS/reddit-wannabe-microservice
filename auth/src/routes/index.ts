@@ -1,4 +1,4 @@
-import { currentUser, validateRequest } from '@reddit-wannabe/common';
+import { currentUser, requireAuth, validateRequest } from '@reddit-wannabe/common';
 import express from 'express';
 import { body } from 'express-validator';
 import {
@@ -26,7 +26,7 @@ authRouter.post('/api/users/signin', [
 
 authRouter.get('/api/users/me', currentUser, getCurrentUser);
 authRouter.post('/api/users/signout', signOut);
-authRouter.patch('/api/users/update-password', [
+authRouter.patch('/api/users/update-password', requireAuth, [
   body('newPassword').trim().isLength({
     min: 6,
     max: 20,
@@ -37,11 +37,11 @@ authRouter.patch('/api/users/update-password', [
   }).withMessage('Password is required and must have at least 6 characters'),
 ], currentUser, validateRequest, updatePassword);
 
-authRouter.get('/api/users/detail/:userId', currentUser, getUserDetails);
-authRouter.get('/api/users/all', currentUser, getAllUsers);
-authRouter.patch('/api/users/delete/:userId', currentUser, deleteUser);
-authRouter.patch('/api/users/restore/:userId', currentUser, restoreUser);
-authRouter.patch('/api/users/update/:userId', [
+authRouter.get('/api/users/detail/:userId', requireAuth, currentUser, getUserDetails);
+authRouter.get('/api/users/all', requireAuth, currentUser, getAllUsers);
+authRouter.patch('/api/users/delete/:userId', requireAuth, currentUser, deleteUser);
+authRouter.patch('/api/users/restore/:userId', requireAuth, currentUser, restoreUser);
+authRouter.patch('/api/users/update/:userId', requireAuth, [
   body('email').isEmail().withMessage('Invalid Email'),
   body('firstName').notEmpty().withMessage('First name is required'),
   body('lastName').notEmpty().withMessage('Last name is required'),

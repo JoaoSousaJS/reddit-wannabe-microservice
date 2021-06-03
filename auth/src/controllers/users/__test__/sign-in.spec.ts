@@ -61,6 +61,8 @@ describe('Sign in Controller', () => {
       confirmPassword: 'asdfg1234',
     }).expect(201);
 
+    await agent.post('/api/users/signout').send({});
+
     const response = await agent.post('/api/users/signin').send({
       email: 'joao@asdas.com',
       password: 'asdfg1234',
