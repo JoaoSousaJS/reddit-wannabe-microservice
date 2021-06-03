@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thread-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thread-reddit
+  template:
+    metadata:
+      labels:
+        app: thread-reddit
+    spec:
+      containers:
+        - name: thread-reddit
+          image: haalpme/reddit-thread
+          env:
+            - name: MONGO_URI
+              value: 'mongodb://auth-mongo-srv:27017/auth'
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret
+                  key: JWT_KEY
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thread-srv-reddit
+spec:
+  selector:
+    app: thread-reddit
+  ports:
+    - name: thread-reddit
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
