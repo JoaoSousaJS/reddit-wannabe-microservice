@@ -17,6 +17,13 @@ spec:
                 name: auth-srv-reddit
                 port:
                   number: 3000
+          - path: /api/threads/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: thread-srv-reddit
+                port:
+                  number: 3000
           - path: /?(.*)
             pathType: Prefix
             backend:
