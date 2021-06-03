@@ -23,4 +23,10 @@ describe('New Thread', () => {
 
     expect(response.status).not.toEqual(401);
   });
+
+  it('Should return 400 if title is blank ', async () => {
+    await agent.post('/api/threads').set('Cookie', global.signIn()).send({
+      title: '',
+    }).expect(400);
+  });
 });
