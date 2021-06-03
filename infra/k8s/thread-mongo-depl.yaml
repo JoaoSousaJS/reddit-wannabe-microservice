@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: thread-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thread-mongo
+  template:
+    metadata:
+      labels:
+        app: thread-mongo
+    spec:
+      containers:
+        - name: thread-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: thread-mongo-srv
+spec:
+  selector:
+    app: thread-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

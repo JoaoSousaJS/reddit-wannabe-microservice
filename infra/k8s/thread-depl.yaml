@@ -17,7 +17,7 @@ spec:
           image: haalpme/reddit-thread
           env:
             - name: MONGO_URI
-              value: 'mongodb://auth-mongo-srv:27017/auth'
+              value: 'mongodb://thread-mongo-srv:27017/thread'
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:
