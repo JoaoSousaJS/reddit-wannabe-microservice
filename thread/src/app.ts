@@ -2,6 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError } from '@reddit-wannabe/common';
+import { threadRouter } from './routes';
 
 export const app = express();
 
@@ -11,6 +12,8 @@ app.use(cookieSession({
   signed: false,
   secure: process.env.NODE_ENV !== 'test',
 }));
+
+app.use(threadRouter);
 
 app.all('*', () => {
   throw new NotFoundError();
