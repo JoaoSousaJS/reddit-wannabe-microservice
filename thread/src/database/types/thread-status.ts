@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-export enum ThreatStatus {
+export enum ThreadStatus {
   Active = 'Active',
   Inactive = 'Inactive',
   Hidden = 'Hidden'
