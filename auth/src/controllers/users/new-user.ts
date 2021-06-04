@@ -38,5 +38,8 @@ export const signUp = async (req: Request, res: Response) => {
     jwt: userJwt,
   };
 
-  res.status(201).send(user);
+  res.status(201).send({
+    user,
+    jwt: userJwt,
+  });
 };
