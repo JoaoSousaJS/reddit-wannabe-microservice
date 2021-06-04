@@ -6,6 +6,7 @@ import {
   FormErrorMessage
 } from '@chakra-ui/react'
 import { useRequest } from 'hooks/use-request'
+import { signin } from 'next-auth/client'
 import { useRouter } from 'next/dist/client/router'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
@@ -30,15 +31,22 @@ export const SignIn = () => {
     onSuccess: () => router.push('/')
   })
 
-  const handleSignUp = handleSubmit(async ({ email, password }) => {
-    await doRequest({
+  const handleSignIn = handleSubmit(async ({ email, password }) => {
+    const result = await signin('credentials', {
       email,
-      password
+      password,
+      redirect: false
     })
+
+    if (result?.url) {
+      return router.push(result?.url)
+    }
+
+    console.log('invalid credential')
   })
 
   return (
-    <form onSubmit={handleSignUp}>
+    <form onSubmit={handleSignIn}>
       <FormControl isInvalid={!!errors.email}>
         <FormLabel htmlFor="email">Email</FormLabel>
         <Input
