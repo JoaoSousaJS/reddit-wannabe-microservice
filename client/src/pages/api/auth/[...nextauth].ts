@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth'
+import { NextApiRequest, NextApiResponse } from 'next-auth/internals/utils'
 import Providers from 'next-auth/providers'
 
 const options = {
@@ -7,30 +8,55 @@ const options = {
   },
   providers: [
     Providers.Credentials({
-      name: 'sign-in',
-
+      name: 'Credentials',
       credentials: {},
-      async authorize(email, password) {
-        // You need to provide your own logic here that takes the credentials
-        // submitted and returns either a object representing a user or value
-        // that is false/null if the credentials are invalid.
-        // e.g. return { id: 1, name: 'J Smith', email: 'jsmith@example.com' }
-        // You can also use the `req` object to obtain additional parameters
-        // (i.e., the request IP address)
-        const res = await fetch('/your/endpoint', {
-          method: 'POST',
-          body: JSON.stringify(credentials),
-          headers: { 'Content-Type': 'application/json' }
-        })
-        const user = await res.json()
+      async authorize(credentials) {
+        const res = await fetch(
+          `${process.env.NEXTAUTH_URL}/api/users/signin`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password
+            }),
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json'
+            }
+          }
+        )
 
-        // If no error and we have user data, return it
-        if (res.ok && user) {
-          return user
+        const response = await res.json()
+
+        if (response.user) {
+          return { ...response.user, jwt: response.jwt }
+        } else {
+          return null
         }
-        // Return null if user data could not be retrieved
-        return null
       }
     })
-  ]
+  ],
+  callbacks: {
+    session: async (session: any, user: any) => {
+      session.jwt = user.jwt
+      session.id = user.id
+
+      return Promise.resolve(session)
+    },
+    jwt: async (token: any, user: any) => {
+      if (user) {
+        token.id = user.id
+        token.email = user.email
+        token.jwt = user.jwt
+      }
+
+      return Promise.resolve(token)
+    }
+  }
 }
+
+const Auth = (req: NextApiRequest, res: NextApiResponse) => {
+  NextAuth(req, res, options)
+}
+
+export default Auth
