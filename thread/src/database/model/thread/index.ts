@@ -34,7 +34,7 @@ const threadSchema = new Schema<ThreadDocument, ThreadModel>({
     required: true,
   },
   userId: {
-    tyoe: String,
+    type: String,
     required: true,
   },
   createdAt: {

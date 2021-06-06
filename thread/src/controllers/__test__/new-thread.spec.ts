@@ -1,4 +1,5 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../app';
 import { Thread } from '../../database/model/thread';
 import { clear, close, connect } from '../../test/setup';
@@ -33,11 +34,12 @@ describe('New Thread', () => {
 
   it('Should create a thread with valid inputs', async () => {
     let threads = await Thread.find({});
-
+    const userId = mongoose.Types.ObjectId().toHexString();
     expect(threads.length).toEqual(0);
 
     await agent.post('/api/threads').set('Cookie', global.signIn()).send({
       title: 'Games',
+      userId,
     }).expect(201);
 
     threads = await Thread.find({});
