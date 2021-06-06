@@ -1,5 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
+import { Thread } from '../../database/model/thread';
 import { clear, close, connect } from '../../test/setup';
 
 const agent = request.agent(app);
@@ -28,5 +29,21 @@ describe('New Thread', () => {
     await agent.post('/api/threads').set('Cookie', global.signIn()).send({
       title: '',
     }).expect(400);
+  });
+
+  it('Should create a thread with valid inputs', async () => {
+    let threads = await Thread.find({});
+
+    expect(threads.length).toEqual(0);
+
+    await agent.post('/api/threads').set('Cookie', global.signIn()).send({
+      title: 'Games',
+    }).expect(201);
+
+    threads = await Thread.find({});
+
+    expect(threads.length).toEqual(1);
+
+    expect(threads[0].title).toEqual('Games');
   });
 });
