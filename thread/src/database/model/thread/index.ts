@@ -5,12 +5,10 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { ThreadStatus } from '../../types/thread-status';
 
 interface ThreadAttrs {
-  id: string
   title: string
   userId: string
-  createdAt: Date
-  version: number
-  status: ThreadStatus
+  version?: number
+  status?: ThreadStatus
   postId?: [string]
 }
 
@@ -64,7 +62,6 @@ threadSchema.set('versionKey', 'version');
 threadSchema.plugin(updateIfCurrentPlugin);
 
 threadSchema.statics.build = (attrs: ThreadAttrs) => new Thread({
-  _id: attrs.id,
   version: attrs.version,
   title: attrs.title,
   status: ThreadStatus.Active,
