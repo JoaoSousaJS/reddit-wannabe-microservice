@@ -32,6 +32,16 @@ describe('New Thread', () => {
     }).expect(400);
   });
 
+  it('Should return 400 if title already exist ', async () => {
+    await agent.post('/api/threads').set('Cookie', global.signIn()).send({
+      title: 'Games',
+    }).expect(201);
+
+    await agent.post('/api/threads').set('Cookie', global.signIn()).send({
+      title: 'Games',
+    }).expect(400);
+  });
+
   it('Should create a thread with valid inputs', async () => {
     let threads = await Thread.find({});
     const userId = mongoose.Types.ObjectId().toHexString();
