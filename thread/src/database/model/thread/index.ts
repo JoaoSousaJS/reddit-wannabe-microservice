@@ -30,6 +30,7 @@ const threadSchema = new Schema<ThreadDocument, ThreadModel>({
   title: {
     type: String,
     required: true,
+    unique: true,
   },
   userId: {
     type: String,
