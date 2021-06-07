@@ -10,7 +10,7 @@ interface ThreadAttrs {
   userId: string
   version?: number
   status?: ThreadStatus
-  postId?: PostAttrs
+  post?: PostAttrs
 }
 
 interface ThreadDocument extends Document {
@@ -19,7 +19,7 @@ interface ThreadDocument extends Document {
   createdAt: Date
   version: number
   status: ThreadStatus
-  postId?: PostAttrs
+  post?: PostAttrs
 }
 
 interface ThreadModel extends Model<ThreadDocument> {
