@@ -4,7 +4,7 @@ import { Thread } from '../../database/model/thread';
 
 export const newThread = async (req:Request, res: Response) => {
   const userId = req.currentUser.id;
-  const { title } = req.body;
+  const { title, post } = req.body;
 
   const threadExists = await Thread.findOne({
     title,
@@ -17,6 +17,7 @@ export const newThread = async (req:Request, res: Response) => {
   const thread = Thread.build({
     title,
     userId,
+    post,
   });
 
   await thread.save();
