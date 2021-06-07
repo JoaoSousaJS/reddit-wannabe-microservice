@@ -11,7 +11,7 @@ export interface PostAttrs {
   version?: number
 }
 
-interface PostDocument extends Document {
+export interface PostDocument extends Document {
   title: string
   status?: PostStatus
   totalComments: number

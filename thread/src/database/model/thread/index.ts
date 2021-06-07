@@ -2,7 +2,6 @@ import mongoose, {
  Document, model, Model, Schema,
 } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { PostAttrs } from '../post';
 import { ThreadStatus } from '../../types/thread-status';
 
 interface ThreadAttrs {
@@ -10,7 +9,7 @@ interface ThreadAttrs {
   userId: string
   version?: number
   status?: ThreadStatus
-  post?: PostAttrs
+  post?: string
 }
 
 interface ThreadDocument extends Document {
@@ -19,7 +18,7 @@ interface ThreadDocument extends Document {
   createdAt: Date
   version: number
   status: ThreadStatus
-  post?: PostAttrs
+  post?: string
 }
 
 interface ThreadModel extends Model<ThreadDocument> {
@@ -48,10 +47,10 @@ const threadSchema = new Schema<ThreadDocument, ThreadModel>({
     enum: [ThreadStatus],
     default: ThreadStatus.Active,
   },
-  post: {
+  post: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Post',
-  },
+  }],
 }, {
   toJSON: {
     transform(doc, ret) {
@@ -69,6 +68,7 @@ threadSchema.statics.build = (attrs: ThreadAttrs) => new Thread({
   title: attrs.title,
   status: ThreadStatus.Active,
   userId: attrs.userId,
+  post: attrs.post,
 });
 
 export const Thread = model<ThreadDocument, ThreadModel>('Thread', threadSchema);
