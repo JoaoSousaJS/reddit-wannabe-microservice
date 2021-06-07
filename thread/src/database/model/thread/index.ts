@@ -2,6 +2,7 @@ import mongoose, {
  Document, model, Model, Schema,
 } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
+import { PostAttrs } from '../../post';
 import { ThreadStatus } from '../../types/thread-status';
 
 interface ThreadAttrs {
@@ -9,7 +10,7 @@ interface ThreadAttrs {
   userId: string
   version?: number
   status?: ThreadStatus
-  postId?: [string]
+  postId?: PostAttrs
 }
 
 interface ThreadDocument extends Document {
@@ -18,7 +19,7 @@ interface ThreadDocument extends Document {
   createdAt: Date
   version: number
   status: ThreadStatus
-  postId?: [string]
+  postId?: PostAttrs
 }
 
 interface ThreadModel extends Model<ThreadDocument> {
