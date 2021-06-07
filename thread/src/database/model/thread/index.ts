@@ -1,4 +1,4 @@
-import {
+import mongoose, {
  Document, model, Model, Schema,
 } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
@@ -47,8 +47,9 @@ const threadSchema = new Schema<ThreadDocument, ThreadModel>({
     enum: [ThreadStatus],
     default: ThreadStatus.Active,
   },
-  postId: {
-    type: Array,
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Post',
   },
 }, {
   toJSON: {
