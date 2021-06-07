@@ -2,7 +2,7 @@ import {
  Document, model, Model, Schema,
 } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { PostStatus } from '../types/post-status';
+import { PostStatus } from '../../types/post-status';
 
 export interface PostAttrs {
   title: string

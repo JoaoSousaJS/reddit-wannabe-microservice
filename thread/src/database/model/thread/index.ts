@@ -2,7 +2,7 @@ import mongoose, {
  Document, model, Model, Schema,
 } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { PostAttrs } from '../../post';
+import { PostAttrs } from '../post';
 import { ThreadStatus } from '../../types/thread-status';
 
 interface ThreadAttrs {
