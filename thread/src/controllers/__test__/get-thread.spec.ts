@@ -15,6 +15,6 @@ describe('Get specific Thread', () => {
   });
 
   it('Should return 400 if the thread does not exist', async () => {
-    await agent.get('/api/threads/:threadId').expect(404);
+    await agent.get('/api/threads/:threadId').expect(400);
   });
 });
