@@ -60,4 +60,22 @@ describe('Update Thread', () => {
       title: '',
     }).expect(400);
   });
+
+  it('Should update the thread', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'new games',
+    }).expect(201);
+
+    let thread = await Thread.find({});
+
+    await agent.patch(`/api/threads/${thread[0].id}`).set('Cookie', cookie).send({
+      title: 'games',
+    }).expect(204);
+
+    thread = await Thread.find({});
+
+    expect(thread[0].title).toEqual('games');
+  });
 });
