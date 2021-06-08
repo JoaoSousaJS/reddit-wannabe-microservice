@@ -5,7 +5,7 @@ import { Thread } from '../../database/model/thread';
 export const updateThread = async (req: Request, res: Response) => {
   const { id } = req.currentUser;
   const { threadId } = req.params;
-  const { title } = req.body;
+  const { title, postId } = req.body;
 
   const threadExists = await Thread.findById(threadId);
 
@@ -19,6 +19,7 @@ export const updateThread = async (req: Request, res: Response) => {
 
   threadExists.set({
     title,
+    post: postId,
   });
 
   await threadExists.save();

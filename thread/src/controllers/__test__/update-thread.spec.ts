@@ -124,13 +124,12 @@ describe('Update Thread', () => {
 
     await agent.patch(`/api/threads/${thread[0].id}`).set('Cookie', cookie).send({
       title: 'games',
-      post: post.id,
+      postId: post.id,
     }).expect(204);
 
     thread = await Thread.find({});
 
-    console.log(thread);
-
     expect(thread[0].title).toEqual('games');
+    expect(thread[0].post).toHaveLength(1);
   });
 });
