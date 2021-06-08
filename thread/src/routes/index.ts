@@ -11,7 +11,9 @@ threadRouter.get('/api/threads/:threadId', [
   param('threadId').isMongoId().trim(),
 ], getThread);
 
-threadRouter.patch('/api/threads/:threadId', requireAuth, validateRequest, currentUser, updateThread);
+threadRouter.patch('/api/threads/:threadId', requireAuth, [
+  body('title').notEmpty().withMessage('Title is required'),
+], validateRequest, currentUser, updateThread);
 
 threadRouter.post('/api/threads', requireAuth, [
   body('title').notEmpty().withMessage('Title is required'),
