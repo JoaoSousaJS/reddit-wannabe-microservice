@@ -46,4 +46,18 @@ describe('Update Thread', () => {
       title: 'game',
     }).expect(401);
   });
+
+  it('Should return 400 if title is blank or invalid', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'new games',
+    }).expect(201);
+
+    const thread = await Thread.find({});
+
+    await agent.patch(`/api/threads/${thread[0].id}`).set('Cookie', cookie).send({
+      title: '',
+    }).expect(400);
+  });
 });
