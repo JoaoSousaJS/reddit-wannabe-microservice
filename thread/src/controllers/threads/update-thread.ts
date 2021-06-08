@@ -5,6 +5,7 @@ import { Thread } from '../../database/model/thread';
 export const updateThread = async (req: Request, res: Response) => {
   const { id } = req.currentUser;
   const { threadId } = req.params;
+  const { title } = req.body;
 
   const threadExists = await Thread.findById(threadId);
 
@@ -15,5 +16,11 @@ export const updateThread = async (req: Request, res: Response) => {
   if (id !== threadExists.userId) {
     throw new UnauthorizedError("You can't edit this thread");
   }
-  res.status(204).send({ true: 'true' });
+
+  threadExists.set({
+    title,
+  });
+
+  await threadExists.save();
+  res.status(204).send(threadExists);
 };
