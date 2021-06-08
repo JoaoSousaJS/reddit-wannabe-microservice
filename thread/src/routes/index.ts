@@ -1,4 +1,4 @@
-import { requireAuth, validateRequest } from '@reddit-wannabe/common';
+import { currentUser, requireAuth, validateRequest } from '@reddit-wannabe/common';
 import express from 'express';
 import { body, param } from 'express-validator';
 import {
@@ -11,7 +11,7 @@ threadRouter.get('/api/threads/:threadId', [
   param('threadId').isMongoId().trim(),
 ], getThread);
 
-threadRouter.patch('/api/threads/:threadId', requireAuth, validateRequest, updateThread);
+threadRouter.patch('/api/threads/:threadId', requireAuth, validateRequest, currentUser, updateThread);
 
 threadRouter.post('/api/threads', requireAuth, [
   body('title').notEmpty().withMessage('Title is required'),
