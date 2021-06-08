@@ -1,6 +1,8 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
+import { Thread } from '../../database/model/thread';
 
 const agent = request.agent(app);
 
@@ -25,8 +27,23 @@ describe('Update Thread', () => {
   });
 
   it('Should return 400 if the thread does not exist', async () => {
-    await agent.patch('/api/threads/:threadId').set('Cookie', global.signIn()).send({
+    const randomThreadId = mongoose.Types.ObjectId().toHexString();
+    await agent.patch(`/api/threads/${randomThreadId}`).set('Cookie', global.signIn()).send({
       title: 'game',
     }).expect(400);
+  });
+
+  it('Should return 401 if the thread does not belong to the current user', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'new games',
+    }).expect(201);
+
+    const thread = await Thread.find({});
+
+    await agent.patch(`/api/threads/${thread[0].id}`).set('Cookie', global.signIn()).send({
+      title: 'game',
+    }).expect(401);
   });
 });
