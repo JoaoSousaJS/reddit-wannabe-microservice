@@ -23,4 +23,10 @@ describe('Update Thread', () => {
 
     expect(response.status).not.toEqual(401);
   });
+
+  it('Should return 400 if the thread does not exist', async () => {
+    await agent.patch('/api/threads/:threadId').set('Cookie', global.signIn()).send({
+      title: 'game',
+    }).expect(400);
+  });
 });
