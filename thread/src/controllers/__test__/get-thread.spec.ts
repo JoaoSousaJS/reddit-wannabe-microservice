@@ -56,6 +56,6 @@ describe('Get specific Thread', () => {
     const response = await agent.get(`/api/threads/${newThread.id}`).expect(200);
 
     expect(response.body.title).toEqual('games');
-    expect(response.body.post.title).toEqual('games post');
+    expect(response.body.post[0].title).toEqual('games post');
   });
 });
