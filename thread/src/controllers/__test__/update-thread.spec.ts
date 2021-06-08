@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
 import { Thread } from '../../database/model/thread';
+import { Post } from '../../database/model/post';
 
 const agent = request.agent(app);
 
@@ -103,5 +104,33 @@ describe('Update Thread', () => {
     thread = await Thread.find({});
 
     expect(thread[0].version).toEqual(2);
+  });
+
+  it('Should update the thread and add a post', async () => {
+    const cookie = global.signIn();
+
+    const post = Post.build({
+      title: 'game post',
+      totalComments: 2,
+    });
+
+    await post.save();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'new games',
+    }).expect(201);
+
+    let thread = await Thread.find({});
+
+    await agent.patch(`/api/threads/${thread[0].id}`).set('Cookie', cookie).send({
+      title: 'games',
+      post: post.id,
+    }).expect(204);
+
+    thread = await Thread.find({});
+
+    console.log(thread);
+
+    expect(thread[0].title).toEqual('games');
   });
 });
