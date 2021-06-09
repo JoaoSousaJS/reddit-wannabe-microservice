@@ -1,8 +1,8 @@
 import request from 'supertest';
-import mongoose from 'mongoose';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
 import { Thread } from '../../database/model/thread';
+import { ThreadStatus } from '../../database/types/thread-status';
 
 const agent = request.agent(app);
 
@@ -40,5 +40,26 @@ describe('Active Thread', () => {
     const threads = await Thread.find({});
 
     await agent.patch(`/api/threads/${threads[0].id}/active`).set('Cookie', global.signIn()).send({}).expect(401);
+  });
+
+  it('Should active the thread', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'Game',
+    });
+
+    let threads = await Thread.find({});
+
+    threads[0].set({
+      status: ThreadStatus.Inactive,
+    });
+
+    await threads[0].save();
+
+    await agent.patch(`/api/threads/${threads[0].id}/active`).set('Cookie', cookie).send({}).expect(204);
+    threads = await Thread.find({});
+
+    expect(threads[0].status).toEqual(ThreadStatus.Active);
   });
 });
