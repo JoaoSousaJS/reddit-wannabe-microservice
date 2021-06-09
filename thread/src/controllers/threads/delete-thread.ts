@@ -8,10 +8,6 @@ export const deleteThread = async (req: Request, res: Response) => {
 
   const threadExists = await Thread.findById(threadId);
 
-  if (!threadExists) {
-    throw new BadRequesterror('This thread does not exist');
-  }
-
   if (threadExists.status === ThreadStatus.Inactive) {
     throw new BadRequesterror('This thread is inactive');
   }
