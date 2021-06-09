@@ -23,4 +23,8 @@ describe('Delete Thread', () => {
 
     expect(response.status).not.toEqual(401);
   });
+
+  it('Should return 400 if the thread does not exist', async () => {
+    await agent.patch('/api/threads/:threadId/delete').set('Cookie', global.signIn()).expect(400);
+  });
 });
