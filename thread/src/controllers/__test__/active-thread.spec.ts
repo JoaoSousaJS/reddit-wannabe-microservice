@@ -1,6 +1,8 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
+import { Thread } from '../../database/model/thread';
 
 const agent = request.agent(app);
 
@@ -26,5 +28,17 @@ describe('Active Thread', () => {
 
   it('Should return 400 if the thread does not exist', async () => {
     await agent.patch('/api/threads/:threadId/active').set('Cookie', global.signIn()).send({}).expect(400);
+  });
+
+  it('Should return 401 if the thread does not belong to the current user', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'Game',
+    });
+
+    const threads = await Thread.find({});
+
+    await agent.patch(`/api/threads/${threads[0].id}/active`).set('Cookie', global.signIn()).send({}).expect(401);
   });
 });
