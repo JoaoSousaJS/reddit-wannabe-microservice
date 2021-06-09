@@ -2,6 +2,7 @@ import { currentUser, requireAuth, validateRequest } from '@reddit-wannabe/commo
 import express from 'express';
 import { body, param } from 'express-validator';
 import {
+  activeThread,
   deleteThread,
  getAllThreads, getThread, newThread, updateThread,
 } from '../controllers/threads';
@@ -17,6 +18,7 @@ threadRouter.patch('/api/threads/:threadId', requireAuth, [
 ], validateRequest, currentUser, updateThread);
 
 threadRouter.patch('/api/threads/:threadId/delete', requireAuth, currentUser, deleteThread);
+threadRouter.patch('/api/threads/:threadId/active', requireAuth, currentUser, activeThread);
 
 threadRouter.post('/api/threads', requireAuth, [
   body('title').notEmpty().withMessage('Title is required'),
