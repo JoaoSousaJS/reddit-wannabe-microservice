@@ -62,4 +62,18 @@ describe('Delete Thread', () => {
 
     await agent.patch(`/api/threads/${thread[0].id}/delete`).set('Cookie', cookie).expect(400);
   });
+
+  it('Should delete the thread', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'game',
+    }).expect(201);
+
+    const thread = await Thread.find({});
+
+    const response = await agent.patch(`/api/threads/${thread[0].id}/delete`).set('Cookie', cookie).expect(204);
+
+    expect(response.body.status).toEqual(ThreadStatus.Inactive);
+  });
 });
