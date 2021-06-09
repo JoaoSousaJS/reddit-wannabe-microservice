@@ -4,10 +4,11 @@ import { Thread } from '../database/model/thread';
 
 export const checkThreadOwner = async (req: Request, res: Response, next: NextFunction) => {
   const { threadId } = req.params;
+  const { id } = req.currentUser;
 
   const threadExists = await Thread.findById(threadId);
 
-  if (!threadExists) {
+  if (id !== threadExists.userId) {
     throw new UnauthorizedError("You can't do this action");
   }
 
