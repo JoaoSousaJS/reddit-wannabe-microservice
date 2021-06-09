@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
 import { Thread } from '../../database/model/thread';
+import { ThreadStatus } from '../../database/types/thread-status';
 
 const agent = request.agent(app);
 
@@ -40,5 +41,25 @@ describe('Delete Thread', () => {
     await thread.save();
 
     await agent.patch(`/api/threads/${thread.id}/delete`).set('Cookie', global.signIn()).expect(401);
+  });
+
+  it('Should return 400 if thread is already deleted', async () => {
+    const cookie = global.signIn();
+
+    await agent.post('/api/threads').set('Cookie', cookie).send({
+      title: 'game',
+    }).expect(201);
+
+    let thread = await Thread.find({});
+
+    thread[0].set({
+      status: ThreadStatus.Inactive,
+    });
+
+    await thread[0].save();
+
+    thread = await Thread.find({});
+
+    await agent.patch(`/api/threads/${thread[0].id}/delete`).set('Cookie', cookie).expect(400);
   });
 });

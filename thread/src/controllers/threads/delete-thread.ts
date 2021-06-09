@@ -1,6 +1,7 @@
 import { BadRequesterror, UnauthorizedError } from '@reddit-wannabe/common';
 import { Request, Response } from 'express';
 import { Thread } from '../../database/model/thread';
+import { ThreadStatus } from '../../database/types/thread-status';
 
 export const deleteThread = async (req: Request, res: Response) => {
   const { threadId } = req.params;
@@ -14,6 +15,10 @@ export const deleteThread = async (req: Request, res: Response) => {
 
   if (id !== threadExists.userId) {
     throw new UnauthorizedError('Unauthorized');
+  }
+
+  if (threadExists.status === ThreadStatus.Inactive) {
+    throw new BadRequesterror('This thread is inactive');
   }
   res.send({ true: 'true' });
 };
