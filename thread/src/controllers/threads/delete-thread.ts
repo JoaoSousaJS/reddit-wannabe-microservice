@@ -20,5 +20,12 @@ export const deleteThread = async (req: Request, res: Response) => {
   if (threadExists.status === ThreadStatus.Inactive) {
     throw new BadRequesterror('This thread is inactive');
   }
-  res.send({ true: 'true' });
+
+  threadExists.set({
+    status: ThreadStatus.Inactive,
+  });
+
+  await threadExists.save();
+
+  res.status(204).send(threadExists);
 };

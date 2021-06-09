@@ -70,10 +70,11 @@ describe('Delete Thread', () => {
       title: 'game',
     }).expect(201);
 
-    const thread = await Thread.find({});
+    let thread = await Thread.find({});
 
     const response = await agent.patch(`/api/threads/${thread[0].id}/delete`).set('Cookie', cookie).expect(204);
-
-    expect(response.body.status).toEqual(ThreadStatus.Inactive);
+    console.log(response.body);
+    thread = await Thread.find({});
+    expect(thread[0].status).toEqual(ThreadStatus.Inactive);
   });
 });
