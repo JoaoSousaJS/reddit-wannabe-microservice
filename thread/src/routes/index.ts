@@ -6,6 +6,7 @@ import {
   deleteThread,
  getAllThreads, getThread, newThread, updateThread,
 } from '../controllers/threads';
+import { checkThreadOwner } from '../middlewares';
 
 export const threadRouter = express.Router();
 
@@ -15,10 +16,10 @@ threadRouter.get('/api/threads/:threadId', [
 
 threadRouter.patch('/api/threads/:threadId', requireAuth, [
   body('title').notEmpty().withMessage('Title is required'),
-], validateRequest, currentUser, updateThread);
+], validateRequest, currentUser, checkThreadOwner, updateThread);
 
-threadRouter.patch('/api/threads/:threadId/delete', requireAuth, currentUser, deleteThread);
-threadRouter.patch('/api/threads/:threadId/active', requireAuth, currentUser, activeThread);
+threadRouter.patch('/api/threads/:threadId/delete', requireAuth, currentUser, checkThreadOwner, deleteThread);
+threadRouter.patch('/api/threads/:threadId/active', requireAuth, currentUser, checkThreadOwner, activeThread);
 
 threadRouter.post('/api/threads', requireAuth, [
   body('title').notEmpty().withMessage('Title is required'),
