@@ -1,6 +1,8 @@
 import request from 'supertest';
+import mongoose from 'mongoose';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
+import { Thread } from '../../database/model/thread';
 
 const agent = request.agent(app);
 
@@ -26,5 +28,17 @@ describe('Delete Thread', () => {
 
   it('Should return 400 if the thread does not exist', async () => {
     await agent.patch('/api/threads/:threadId/delete').set('Cookie', global.signIn()).expect(400);
+  });
+
+  it('Should return 401 if the thread does not belong to the current user', async () => {
+    const userId = mongoose.Types.ObjectId().toHexString();
+    const thread = Thread.build({
+      title: 'game',
+      userId,
+    });
+
+    await thread.save();
+
+    await agent.patch(`/api/threads/${thread.id}/delete`).set('Cookie', global.signIn()).expect(401);
   });
 });
