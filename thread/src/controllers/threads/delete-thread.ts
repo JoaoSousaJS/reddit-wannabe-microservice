@@ -1,7 +1,6 @@
-import { BadRequesterror } from '@reddit-wannabe/common';
+import { BadRequesterror, ThreadStatus } from '@reddit-wannabe/common';
 import { Request, Response } from 'express';
 import { Thread } from '../../database/model/thread';
-import { ThreadStatus } from '../../database/types/thread-status';
 
 export const deleteThread = async (req: Request, res: Response) => {
   const { threadId } = req.params;

@@ -1,8 +1,8 @@
+import { ThreadStatus } from '@reddit-wannabe/common';
 import mongoose, {
  Document, model, Model, Schema,
 } from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { ThreadStatus } from '../../types/thread-status';
 
 interface ThreadAttrs {
   title: string

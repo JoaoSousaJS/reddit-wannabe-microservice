@@ -1,8 +1,8 @@
 import request from 'supertest';
+import { ThreadStatus } from '@reddit-wannabe/common';
 import { app } from '../../app';
 import { clear, close, connect } from '../../test/setup';
 import { Thread } from '../../database/model/thread';
-import { ThreadStatus } from '../../database/types/thread-status';
 
 const agent = request.agent(app);
 
