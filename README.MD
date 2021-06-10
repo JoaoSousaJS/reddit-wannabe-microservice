@@ -1,6 +1,6 @@
 Reddit Wannabe Microservice
 
-Typescript, NodeJS, MongoDB, Kafka, Docker, Kubernetes and Skaffold.
+Typescript, NodeJS, MongoDB, NATS, Docker, Kubernetes and Skaffold.
 
 Microservices created so far:
 - Auth: handle authentication and user management.
