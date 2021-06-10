@@ -8,3 +8,6 @@ export * from './middlewares/validate-request'
 export * from './middlewares/error-handler'
 export * from './middlewares/current-user'
 export * from './middlewares/require-auth'
+
+export * from './status/post-status'
+export * from './status/thread-status'
