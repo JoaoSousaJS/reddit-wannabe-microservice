@@ -2,7 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import cookieSession from 'cookie-session';
 import { currentUser, errorHandler, NotFoundError } from '@reddit-wannabe/common';
-import { threadRouter } from './routes';
+import { postRouter } from './routes';
 
 export const app = express();
 
@@ -15,7 +15,7 @@ app.use(cookieSession({
 
 app.use(currentUser);
 
-app.use(threadRouter);
+app.use(postRouter);
 
 app.all('*', () => {
   throw new NotFoundError();
