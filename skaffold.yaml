@@ -25,6 +25,14 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image:  haalpme/reddit-post
+      context: post
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
     - image:  haalpme/reddit-client
       context: client
       docker:
