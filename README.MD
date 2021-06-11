@@ -7,3 +7,4 @@ Microservices created so far:
 - Common: handle common packages.
 - Infra: k8s management.
 - Thread: handle thread management.
+- Post: handle post management.
