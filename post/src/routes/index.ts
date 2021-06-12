@@ -5,6 +5,6 @@ import { newPost } from '../controllers/new-post';
 
 export const postRouter = express.Router();
 
-postRouter.post('/api/posts', requireAuth, [
+postRouter.post('/api/threads/:threadId/posts', requireAuth, [
   body('title').notEmpty().withMessage('Title required'),
 ], validateRequest, currentUser, newPost);

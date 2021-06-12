@@ -9,23 +9,23 @@ describe('New Thread', () => {
   beforeEach(async () => clear());
   afterAll(async () => close());
   it('Should handler listening to /api/posts for threads requests', async () => {
-    const response = await agent.post('/api/posts').send({});
+    const response = await agent.post('/api/threads/:theadId/posts').send({});
 
     expect(response.status).not.toEqual(404);
   });
 
   it('Should only be accessed if user is signed in', async () => {
-    await agent.post('/api/posts').send({}).expect(401);
+    await agent.post('/api/threads/:theadId/posts').send({}).expect(401);
   });
 
   it('Should return a status other than 401 if the user is signed in', async () => {
-    const response = await agent.post('/api/posts').set('Cookie', global.signIn()).send({});
+    const response = await agent.post('/api/threads/:theadId/posts').set('Cookie', global.signIn()).send({});
 
     expect(response.status).not.toEqual(401);
   });
 
   it('Should return 400 if the title is blank or invalid', async () => {
-    await agent.post('/api/posts').set('Cookie', global.signIn()).send({
+    await agent.post('/api/threads/:theadId/posts').set('Cookie', global.signIn()).send({
       title: '',
     }).expect(400);
   });
