@@ -1,6 +1,8 @@
 import { ThreadStatus } from '@reddit-wannabe/common';
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
+import { Post } from '../../database/model/post';
 import { Thread } from '../../database/model/thread';
 import { clear, close, connect } from '../../test/setup';
 
@@ -44,6 +46,27 @@ describe('New Thread', () => {
     });
 
     await thread.save();
+    await agent.post(`/api/threads/${thread.id}/posts`).set('Cookie', global.signIn()).send({
+      title: 'game post',
+    }).expect(400);
+  });
+
+  it('should return 400 if the post title already exist', async () => {
+    const thread = Thread.build({
+      status: ThreadStatus.Active,
+    });
+
+    await thread.save();
+
+    const randomId = mongoose.Types.ObjectId().toHexString();
+    const post = Post.build({
+      title: 'game post',
+      userId: randomId,
+      threadId: thread.id,
+    });
+
+    await post.save();
+
     await agent.post(`/api/threads/${thread.id}/posts`).set('Cookie', global.signIn()).send({
       title: 'game post',
     }).expect(400);
