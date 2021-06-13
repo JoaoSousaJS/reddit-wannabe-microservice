@@ -7,7 +7,7 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 interface ThreadAttrs {
   status: ThreadStatus
   post?: string
-  version: number
+  version?: number
 }
 
 interface ThreadDocument extends Document{
