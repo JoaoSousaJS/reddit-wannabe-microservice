@@ -82,8 +82,6 @@ describe('New Thread', () => {
 
     await thread.save();
 
-    console.log(thread);
-
     await agent.post(`/api/threads/${thread.id}/posts`).set('Cookie', global.signIn()).send({
       title: 'game post',
     }).expect(201);
@@ -95,6 +93,6 @@ describe('New Thread', () => {
     const threads = await Thread.find({});
 
     expect(threads[0].post).toHaveLength(1);
-    expect(threads[0].post[0]).toEqual(posts[0].id);
+    expect(threads[0].post[0]).toEqual(posts[0]._id);
   });
 });
