@@ -71,4 +71,30 @@ describe('New Thread', () => {
       title: 'game post',
     }).expect(400);
   });
+
+  it('Should save the post and attach it in a thread', async () => {
+    let posts = await Post.find({});
+
+    expect(posts).toHaveLength(0);
+    const thread = Thread.build({
+      status: ThreadStatus.Active,
+    });
+
+    await thread.save();
+
+    console.log(thread);
+
+    await agent.post(`/api/threads/${thread.id}/posts`).set('Cookie', global.signIn()).send({
+      title: 'game post',
+    }).expect(201);
+
+    posts = await Post.find({});
+
+    expect(posts).toHaveLength(1);
+
+    const threads = await Thread.find({});
+
+    expect(threads[0].post).toHaveLength(1);
+    expect(threads[0].post[0]).toEqual(posts[0].id);
+  });
 });
