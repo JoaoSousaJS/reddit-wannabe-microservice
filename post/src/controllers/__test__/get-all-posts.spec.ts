@@ -14,9 +14,7 @@ describe('Get All Posts', () => {
     expect(response.status).not.toEqual(404);
   });
 
-  it('Should return a status other than 401 if the user is signed in', async () => {
-    const response = await agent.get('/api/threads/:theadId/posts').set('Cookie', global.signIn()).send({});
-
-    expect(response.status).not.toEqual(401);
+  it('Should return 400 if the thread does not exist', async () => {
+    await agent.get('/api/threads/:theadId/posts').send({}).expect(400);
   });
 });
