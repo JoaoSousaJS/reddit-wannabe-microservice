@@ -8,7 +8,7 @@ import { clear, close, connect } from '../../test/setup';
 
 const agent = request.agent(app);
 
-describe('New Thread', () => {
+describe('New Post', () => {
   beforeAll(async () => connect());
   beforeEach(async () => clear());
   afterAll(async () => close());
