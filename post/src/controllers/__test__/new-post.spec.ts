@@ -29,4 +29,10 @@ describe('New Thread', () => {
       title: '',
     }).expect(400);
   });
+
+  it('should return 400 if the thread does not exist', async () => {
+    await agent.post('/api/threads/:theadId/posts').set('Cookie', global.signIn()).send({
+      title: 'game post',
+    }).expect(400);
+  });
 });
