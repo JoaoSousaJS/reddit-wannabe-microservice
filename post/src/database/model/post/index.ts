@@ -7,10 +7,10 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 export interface PostAttrs {
   title: string
   userId: string
-  status: PostStatus
+  status?: PostStatus
   comments?: string
   threadId: string
-  version: number
+  version?: number
 }
 
 export interface PostDocument extends Document {
