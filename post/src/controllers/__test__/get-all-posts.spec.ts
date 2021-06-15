@@ -35,8 +35,8 @@ describe('Get All Posts', () => {
       title: 'game post 2',
     }).expect(201);
 
-    const response = await agent.get('/api/threads/:theadId/posts').expect(200);
-
-    expect(response.body).toHaveLength(2);
+    const response = await agent.get(`/api/threads/${thread.id}/posts`).expect(200);
+    console.log(response.body);
+    expect(response.body.post).toHaveLength(2);
   });
 });

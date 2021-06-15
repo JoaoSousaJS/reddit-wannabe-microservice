@@ -16,9 +16,7 @@ export const newPost = async (req: Request, res: Response) => {
 
   await post.save();
 
-  thread.set({
-    post: post.id,
-  });
+  thread.post.push(post.id);
 
   await thread.save();
 
