@@ -8,7 +8,7 @@ export interface PostAttrs {
   title: string
   userId: string
   status?: PostStatus
-  comments?: string
+  comments?: string[]
   threadId: string
   version?: number
 }
@@ -18,7 +18,7 @@ export interface PostDocument extends Document {
   userId: string
   status: PostStatus
   createdAt: Date
-  comments?: string
+  comments?: string[]
   threadId: string
   version: number
   totalComments: number

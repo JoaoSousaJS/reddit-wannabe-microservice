@@ -36,7 +36,7 @@ describe('Get All Posts', () => {
     }).expect(201);
 
     const response = await agent.get(`/api/threads/${thread.id}/posts`).expect(200);
-    console.log(response.body);
+
     expect(response.body.post).toHaveLength(2);
   });
 });
