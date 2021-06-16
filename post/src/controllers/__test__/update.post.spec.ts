@@ -1,8 +1,10 @@
+import mongoose from 'mongoose';
 import { ThreadStatus } from '@reddit-wannabe/common';
 import request from 'supertest';
 import { app } from '../../app';
 import { Thread } from '../../database/model/thread';
 import { clear, close, connect } from '../../test/setup';
+import { Post } from '../../database/model/post';
 
 const agent = request.agent(app);
 
@@ -37,5 +39,24 @@ describe('Update Post', () => {
 
     await thread.save();
     await agent.put(`/api/threads/${thread.id}/posts/:postId`).set('Cookie', global.signIn()).send({}).expect(400);
+  });
+
+  it('Should return 401 if the post does not belong to the user', async () => {
+    const thread = Thread.build({
+      status: ThreadStatus.Active,
+    });
+
+    const userId = mongoose.Types.ObjectId().toHexString();
+
+    await thread.save();
+
+    const post = Post.build({
+      title: 'game',
+      userId,
+      threadId: thread.id,
+    });
+
+    await post.save();
+    await agent.put(`/api/threads/${thread.id}/posts/${post.id}`).set('Cookie', global.signIn()).send({}).expect(401);
   });
 });
