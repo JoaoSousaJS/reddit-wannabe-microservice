@@ -5,11 +5,13 @@ import { Post } from '../database/model/post';
 export const checkIfPostExists = async (req: Request, res: Response, next: NextFunction) => {
   const { postId } = req.params;
 
-  const postExists = await Post.findById(postId);
+  const post = await Post.findById(postId);
 
-  if (!postExists) {
+  if (!post) {
     throw new BadRequesterror('This post does not exists');
   }
+
+  res.locals.post = post;
 
   next();
 };
