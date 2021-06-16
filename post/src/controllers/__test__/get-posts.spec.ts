@@ -1,6 +1,8 @@
 import { ThreadStatus } from '@reddit-wannabe/common';
+import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../../app';
+import { Post } from '../../database/model/post';
 import { Thread } from '../../database/model/thread';
 import { clear, close, connect } from '../../test/setup';
 
@@ -27,5 +29,26 @@ describe('Get Posts', () => {
 
     await thread.save();
     await agent.get(`/api/threads/${thread.id}/posts/:postId`).expect(400);
+  });
+
+  it('Should return the details of the post', async () => {
+    const userId = mongoose.Types.ObjectId().toHexString();
+    const thread = Thread.build({
+      status: ThreadStatus.Active,
+    });
+
+    await thread.save();
+
+    const post = Post.build({
+      title: 'game',
+      threadId: thread.id,
+      userId,
+
+    });
+    await post.save();
+
+    const response = await agent.get(`/api/threads/${thread.id}/posts/${post.id}`).expect(200);
+
+    expect(response.body.title).toEqual('game');
   });
 });
