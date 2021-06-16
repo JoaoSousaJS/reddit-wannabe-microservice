@@ -25,6 +25,6 @@ describe('Update Post', () => {
   });
 
   it('Should return 400 if the thread does not exist', async () => {
-    await agent.put('/api/threads/:theadId/posts/:postId').send({}).expect(400);
+    await agent.put('/api/threads/:theadId/posts/:postId').set('Cookie', global.signIn()).send({}).expect(400);
   });
 });
