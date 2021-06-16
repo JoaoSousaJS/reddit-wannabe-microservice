@@ -5,14 +5,16 @@ import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 interface CommentAttrs {
   postId: string
-  version: number
+  version?: number
   comments: string
+  userId: string
 }
 
 interface CommentDocument extends Document{
   postId: string
-  version: number
+  version?: number
   comments: string
+  userId: string
 }
 
 interface CommentModel extends Model<CommentDocument> {
@@ -21,6 +23,10 @@ interface CommentModel extends Model<CommentDocument> {
 }
 
 const commentSchema = new Schema<CommentDocument, CommentModel>({
+  userId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   postId: {
     type: Schema.Types.ObjectId,
     required: true,
@@ -40,5 +46,12 @@ const commentSchema = new Schema<CommentDocument, CommentModel>({
 
 commentSchema.set('versionKey', 'version');
 commentSchema.plugin(updateIfCurrentPlugin);
+
+commentSchema.statics.build = (attrs: CommentAttrs) => new Comment({
+  postId: attrs.postId,
+  version: attrs.version,
+  comments: attrs.comments,
+  userId: attrs.userId,
+});
 
 export const Comment = model<CommentDocument, CommentModel>('Comment', commentSchema);
