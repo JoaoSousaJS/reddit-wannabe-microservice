@@ -4,6 +4,7 @@ import { body } from 'express-validator';
 import { getAllPosts } from '../controllers/get-all-posts';
 import { getPost } from '../controllers/get-post';
 import { newPost } from '../controllers/new-post';
+import { updatePost } from '../controllers/update-post';
 import { checkIfPostExists, checkPost, checkThread } from '../middlewares';
 
 export const postRouter = express.Router();
@@ -14,3 +15,4 @@ postRouter.post('/api/threads/:threadId/posts', requireAuth, [
 
 postRouter.get('/api/threads/:threadId/posts', checkThread, getAllPosts);
 postRouter.get('/api/threads/:threadId/posts/:postId', checkThread, checkIfPostExists, getPost);
+postRouter.put('/api/threads/:threadId/posts/:postId', requireAuth, checkThread, checkIfPostExists, updatePost);
