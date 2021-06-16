@@ -1,5 +1,7 @@
+import { ThreadStatus } from '@reddit-wannabe/common';
 import request from 'supertest';
 import { app } from '../../app';
+import { Thread } from '../../database/model/thread';
 import { clear, close, connect } from '../../test/setup';
 
 const agent = request.agent(app);
@@ -26,5 +28,14 @@ describe('Update Post', () => {
 
   it('Should return 400 if the thread does not exist', async () => {
     await agent.put('/api/threads/:theadId/posts/:postId').set('Cookie', global.signIn()).send({}).expect(400);
+  });
+
+  it('Should return 400 if the post does not exist', async () => {
+    const thread = Thread.build({
+      status: ThreadStatus.Active,
+    });
+
+    await thread.save();
+    await agent.put(`/api/threads/${thread.id}/posts/:postId`).set('Cookie', global.signIn()).send({}).expect(400);
   });
 });
