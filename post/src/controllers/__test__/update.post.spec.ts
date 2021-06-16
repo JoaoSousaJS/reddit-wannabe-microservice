@@ -23,4 +23,8 @@ describe('Update Post', () => {
 
     expect(response.status).not.toEqual(401);
   });
+
+  it('Should return 400 if the thread does not exist', async () => {
+    await agent.put('/api/threads/:theadId/posts/:postId').send({}).expect(400);
+  });
 });
