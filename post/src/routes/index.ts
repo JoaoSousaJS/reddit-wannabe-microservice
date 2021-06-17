@@ -11,10 +11,13 @@ import {
 
 export const postRouter = express.Router();
 
+postRouter.get('/api/threads/:threadId/posts/:postId', checkThread, checkIfPostExists, getPost);
+postRouter.patch('/api/threads/:threadId/posts/:postId', requireAuth, [
+  body('title').notEmpty().withMessage('Title required'),
+], validateRequest, currentUser, checkThread, checkPost, updatePost);
+
 postRouter.post('/api/threads/:threadId/posts', requireAuth, [
   body('title').notEmpty().withMessage('Title required'),
 ], validateRequest, currentUser, checkPost, checkThread, newPost);
 
 postRouter.get('/api/threads/:threadId/posts', checkThread, getAllPosts);
-postRouter.get('/api/threads/:threadId/posts/:postId', checkThread, checkIfPostExists, getPost);
-postRouter.patch('/api/threads/:threadId/posts/:postId', requireAuth, currentUser, checkThread, checkPost, updatePost);

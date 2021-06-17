@@ -47,7 +47,7 @@ const postSchema = new Schema<PostDocument, PostModel>({
     type: String,
     required: true,
     enum: [PostStatus],
-    default: [PostStatus.Active],
+    default: PostStatus.Active,
   },
   comments: [{
     type: Schema.Types.ObjectId,

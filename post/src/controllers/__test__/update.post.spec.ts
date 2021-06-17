@@ -77,7 +77,7 @@ describe('Update Post', () => {
 
     const response = await agent.patch(`/api/threads/${thread.id}/posts/${posts[0].id}`).set('Cookie', cookie).send({
       title: 'game updated',
-    }).expect(204);
+    });
 
     expect(response.body.title).toEqual('game updated');
   });
