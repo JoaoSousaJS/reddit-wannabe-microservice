@@ -60,6 +60,26 @@ describe('Update Post', () => {
     }).expect(401);
   });
 
+  it('Should return 400 if title is blank or invalid', async () => {
+    const thread = Thread.build({
+      status: ThreadStatus.Active,
+    });
+
+    const cookie = global.signIn();
+
+    await thread.save();
+
+    await agent.post(`/api/threads/${thread.id}/posts`).set('Cookie', cookie).send({
+      title: 'Game',
+    });
+
+    const posts = await Post.find({});
+
+    await agent.patch(`/api/threads/${thread.id}/posts/${posts[0].id}`).set('Cookie', global.signIn()).send({
+      title: '',
+    }).expect(400);
+  });
+
   it('Should update the post title', async () => {
     const thread = Thread.build({
       status: ThreadStatus.Active,
